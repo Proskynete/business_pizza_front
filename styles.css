@@ -1,0 +1,12 @@
+html,
+body {
+	font-family: 'Nunito', sans-serif;
+}
+
+.title {
+	color: #613dd2;
+	padding-top: 40px;
+}
+.subtitle {
+	padding-bottom: 40px;
+}
