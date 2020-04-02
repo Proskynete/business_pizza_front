@@ -40,7 +40,7 @@
 					<canvas id="pizzaChart" width="400" height="400"></canvas>
 				</div>
 
-				<div class="col-5">
+				<div class="col-4">
 					<a
 						class="btn btn-outline-info"
 						data-toggle="collapse"
@@ -209,6 +209,7 @@
 	<script>
 		const chartContent = document.querySelector('#chartContent');
 		const chartCanvas = document.querySelector('#pizzaChart');
+		const form = document.querySelector('#AddNewPunishedCollapse');
 		const buttonToFetch = document.querySelector('#addNewPunisher');
 		const missing = document.querySelector('#missing');
 		const total = 8;
@@ -217,9 +218,12 @@
 		fetch(url)
 			.then(response => response.json())
 			.then(data => {
-				missing.innerHTML =
-					total - Object.values(data.punished).reduce((a, b) => a + b, 0);
+				const pieces = Object.values(data.punished).reduce((a, b) => a + b, 0);
+
+				missing.innerHTML = total - pieces;
 				handlePrint(Object.values(data.punished));
+
+				if (pieces > 8) form.remove();
 			});
 
 		buttonToFetch.addEventListener('click', () => {
@@ -245,9 +249,15 @@
 			})
 				.then(response => response.json())
 				.then(data => {
+					const pieces = Object.values(data.punished).reduce(
+						(a, b) => a + b,
+						0
+					);
+
+					missing.innerHTML = total - pieces;
 					handlePrint(Object.values(data.punished));
-					missing.innerHTML =
-						total - Object.values(data.punished).reduce((a, b) => a + b, 0);
+
+					if (pieces > 8) form.remove();
 				});
 		});
 
